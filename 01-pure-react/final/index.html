@@ -2,24 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hello React!</title>
   </head>
   <body>
     <div id="root"></div>
 
-    <script
-      src="https://unpkg.com/react@18/umd/react.development.js"
-      crossorigin
-    ></script>
-    <script
-      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
-      crossorigin
-    ></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <!-- the core react library - the interface -->
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- the rendering layer thatll reder the components -->
 
     <script>
       function App() {
+        // starts with a uppercase
+        // here we can return whatever we want to return from the UI
+
+        // can write any type of JS logic
         // const time = new Date().toLocaleTimeString();
         const [time, setTime] = React.useState(new Date().toLocaleTimeString());
 
@@ -27,13 +26,23 @@
           setInterval(function () {
             setTime(new Date().toLocaleTimeString());
           }, 1000);
+          // a javascript function
         }, []);
+        // an effect
 
-        return React.createElement("header", null, `Hello React! It's ${time}`);
+        return React.createElement(
+          'header',
+          null,
+          `Hello, React! It's ${time}`
+        );
+        // the object is coming from the unpkg script file react-18.
       }
 
-      const root = ReactDOM.createRoot(document.getElementById("root"));
+      const root = ReactDOM.createRoot(document.getElementById('root'));
       root.render(React.createElement(App));
+      // this comes from the second unpkg file react-dom
+      //then make the root of our application come from the id=root div - thatll get rendered from inside that div
+      // also its where our App component comes into play
     </script>
   </body>
 </html>
