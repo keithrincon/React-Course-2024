@@ -1,6 +1,6 @@
 // needs to be called index.js webpack (modual bundler) expect the entry point to be called index.js
 
-import React, { createElement } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
@@ -79,11 +79,18 @@ function Menu() {
       <h2>Our Menu</h2>
 
       {numPizzas > 0 ? (
-        <ul className='pizzas'>
-          {pizzas.map((pizza) => (
-            <Pizza pizzaObj={pizza} key={pizza.name} />
-          ))}
-        </ul>
+        <React.Fragment>
+          {/* react fragment key moght be ness. */}
+          <p>
+            Authentic Italian cusine. 6 creative dishes to choose from. All from
+            our stone oven, all organic, all delicious.
+          </p>
+          <ul className='pizzas'>
+            {pizzas.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </React.Fragment>
       ) : (
         <p>We're still working on our menu. Please come back later.</p>
       )}
@@ -104,18 +111,20 @@ function Menu() {
     </main>
   );
 }
-function Pizza(props) {
-  console.log(props);
+function Pizza({ pizzaObj }) {
+  console.log(pizzaObj);
 
-  if (props.pizzaObj.soldOut) return null;
+  // if (pizzaObj.soldOut) return null;
+  // only the pizza that is sold out wont be rendered
   return (
-    <li className='pizza'>
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+    <li className={`pizza ${pizzaObj.soldOut ? 'sold-out' : ''} `}>
+      {/* adding classes to elements */}
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p> {props.pizzaObj.ingredients} </p>
+        <h3>{pizzaObj.name}</h3>
+        <p> {pizzaObj.ingredients} </p>
       </div>
-      <span>{props.pizzaObj.price}</span>
+      <span>{pizzaObj.soldOut ? 'SOLD OUT' : pizzaObj.price}</span>
     </li>
   );
 }
@@ -130,11 +139,12 @@ function Footer() {
   // else alert('Sorry we are closed');
 
   // if (!isOpen) return <p>closed</p>;
+  // if not open
 
   return (
     <footer className='footer'>
       {isOpen ? (
-        <Order closeHour={closeHour} />
+        <Order closeHour={closeHour} openHour={openHour} />
       ) : (
         <p>
           We're happy to welcome you between {openHour}:00. and {closeHour}
@@ -146,11 +156,12 @@ function Footer() {
   // return React.createElement('footer', null, "We're currently open!");
 }
 
-function Order(props) {
+function Order({ closeHour, openHour }) {
   return (
     <div className='order'>
       <p>
-        We're open until {props.closeHour}:00. Come visit us or order online
+        We're open from {openHour}:00 to {closeHour}:00. Come visit us or order
+        online
       </p>
       <button className='btn'>Order</button>
     </div>
@@ -168,3 +179,5 @@ root.render(
 
 // React before 18:
 // React.reander(<App />)
+
+const Test = () => {};
