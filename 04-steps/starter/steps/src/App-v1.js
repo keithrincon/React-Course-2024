@@ -14,15 +14,6 @@ const messages = [
 ];
 
 export default function App() {
-  return (
-    <div>
-      <Steps />
-      <Steps />
-      {/* <Steps /> */}
-    </div>
-  );
-}
-function Steps() {
   // this step will be what we want to update later
   // for now building static part - manullay setting it to one
   const [step, setStep] = useState(1);
@@ -54,13 +45,12 @@ function Steps() {
   }
 
   return (
-    <div>
+    <>
       <button className='close' onClick={() => setIsOpen((is) => !is)}>
         {/* here we day: call it is and then toggle that */}
         {/* using the not operator - its dynamic instead of using false  */}
         &times;
       </button>
-
       {isOpen && (
         <div className='steps'>
           <div className='numbers'>
@@ -70,47 +60,30 @@ function Steps() {
             <div className={step >= 3 ? 'active' : ''}>3</div>
           </div>
           {/* inserting messages dynamically by defining a var thatll tell us which step were in */}
-
-          <StepMessage step={step}>{messages[step - 1]}</StepMessage>
-
+          <p className='message'>
+            Step {step}: {messages[step - 1]}
+          </p>
           <div className='buttons'>
             {/* adding styles to indivual jsx elements */}
             {/* handling events using onClick prop - directly on the element */}
-            <Button bgColor='#7950f2' textColor='fff' onClick={handlePrevious}>
-              <span>👈</span>Previous
-            </Button>
-            <Button bgColor='#7950f2' textColor='fff' onClick={handleNext}>
-              Next <span>👉</span>
-            </Button>
+            <button
+              style={{ backgroundColor: '#7950f2', color: '#fff' }}
+              onClick={handlePrevious}
+              // just passing value not calling it. ex: handlePrevious()
+            >
+              Previous
+            </button>
+            <button
+              style={{ backgroundColor: '#7950f2', color: '#fff' }}
+              onClick={handleNext}
+            >
+              Next
+            </button>
           </div>
         </div>
       )}
-    </div>
+    </>
     // a fragment - itll disapper the div from the DOM
     // when you need a piece of JSX to return 2 elements then the fragment is great for that.
-  );
-}
-
-function StepMessage({ step, children }) {
-  return (
-    <div className='message'>
-      <h3> Step {step} </h3>
-      {children}
-    </div>
-    // we want it to always display the step and whatever content that we get.
-    // so first we need to receive 2 props
-    // 1 step then children prop
-  );
-}
-
-function Button({ textColor, bgColor, onClick, children }) {
-  // with will return a button element which should also have the style and onclick event handler
-  return (
-    <button
-      style={{ backgroundColor: bgColor, color: textColor }}
-      onClick={onClick}
-    >
-      {children}
-    </button>
   );
 }
