@@ -48,3 +48,7 @@ export default function PackingList({
     </div>
   );
 }
+
+// diff between prps and state
+// props are internal to the component
+// state is external to the component

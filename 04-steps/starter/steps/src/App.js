@@ -17,8 +17,6 @@ export default function App() {
   return (
     <div>
       <Steps />
-      <Steps />
-      {/* <Steps /> */}
     </div>
   );
 }
@@ -54,7 +52,7 @@ function Steps() {
   }
 
   return (
-    <div>
+    <>
       <button className='close' onClick={() => setIsOpen((is) => !is)}>
         {/* here we day: call it is and then toggle that */}
         {/* using the not operator - its dynamic instead of using false  */}
@@ -85,7 +83,7 @@ function Steps() {
           </div>
         </div>
       )}
-    </div>
+    </>
     // a fragment - itll disapper the div from the DOM
     // when you need a piece of JSX to return 2 elements then the fragment is great for that.
   );

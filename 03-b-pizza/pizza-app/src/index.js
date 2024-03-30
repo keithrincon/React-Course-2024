@@ -72,6 +72,11 @@ function Menu() {
     <main className='menu'>
       <h2>Our Menu</h2>
 
+      <p>
+        Authentic Italian cusines. 6 creative dishes to choose from. All from
+        our stone oven, all orgnaic, all delicoius.
+      </p>
+
       {numPizzas > 0 ? (
         <ul className='pizzas'>
           {pizzas.map((pizza) => (
@@ -81,30 +86,20 @@ function Menu() {
       ) : (
         <p>We're still working on our menu. Please come back later</p>
       )}
-
-      {/* <Pizza
-        name='Pizza Spinaci'
-        ingredients='Tomato, mozarella, spinach, and ricotta cheese'
-        photoName='pizzas/spinaci.jpg'
-        price={12}
-      />
-      <Pizza
-        name='Pizza Funghi'
-        ingredients='Tomato, mushrooms'
-        price={12}
-        photoName='pizzas/funghi.jpg'
-      /> */}
     </main>
   );
 }
-function Pizza(props) {
+function Pizza({ pizzaObj }) {
+  // if (pizzaObj.soldOut) return null;
+
   return (
-    <li className='pizza'>
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+    <li className={`pizza ${pizzaObj.soldOut ? 'sold-out' : ''}`}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.pizzaObjingredients}</p>
-        <span>{props.pizzaObj.price + 3}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+
+        <span>{pizzaObj.soldOut ? 'SOLD OUT' : pizzaObj.price}</span>
       </div>
     </li>
   );
@@ -117,17 +112,10 @@ function Footer() {
   const isOpen = hour >= openHour && hour < closeHour;
   console.log(isOpen);
 
-  // if (hour >= openHour && hour < closeHour) alert('We are open!');
-  // else alert('We are closed!');
-
   return (
     <footer className='footer'>
       {isOpen ? (
-        <div className='order'>
-          {' '}
-          <p>We're currently open until {closeHour}:00. Come in!</p>{' '}
-          <button className='btn'>Order now</button>{' '}
-        </div>
+        <Order closeHour={closeHour} openHour={openHour} />
       ) : (
         <p>
           We're Happy to welcome you between {openHour}:00 and {closeHour}:00
@@ -136,6 +124,18 @@ function Footer() {
     </footer>
   );
   // return React.createElement('footer', null, "We're currently open!");
+}
+
+function Order({ closeHour, openHour }) {
+  return (
+    <div className='order'>
+      <p>
+        We're open from {openHour}:00 to {closeHour}:00. Come visit us or order
+        online.
+      </p>
+      <button className='btn'>Order now</button>{' '}
+    </div>
+  );
 }
 
 // How to render a React app using createRoot IN REACT 18
